@@ -1,0 +1,69 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>random-lotto</title>
+    <style>
+        .ball {
+            display: inline-block;
+            border: 1px solid black;
+            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            text-align: center;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id='result'>Result:  </div>
+    <div id='bonus'>Bonus:  </div>
+    <script>
+        // code for random mix of 45 numbers
+        const candidate = Array(45).fill().map((v, i) => i + 1);
+        const shuffle = [];
+        while (candidate.length > 0) {
+            const random = Math.floor(Math.random() * candidate.length); // random index
+            const spliceArray = candidate.splice(random, 1);  // candidate.splice(random, 1) returns array [number, i];
+            const value = spliceArray[0];
+            shuffle.push(value);
+        }
+        console.log(shuffle);
+        const winBalls = shuffle.splice(0, 6).sort((a, b) => a - b); // return ascending order (return a - b)
+        const bonus = shuffle[6];
+        console.log(winBalls, bonus);
+
+        const _result = document.querySelector('#result');
+        const _bonus = document.querySelector('#bonus');
+        for (let i = 0; i <= 6; i++) {
+                if (i != 6) {
+                    setTimeout(() => {
+                        const _ball = document.createElement('div');
+                        _ball.className = 'ball';
+                        _ball.textContent = winBalls[i];
+                        _result.appendChild(_ball);
+                    }, (i+1) * 1000);
+                } else {
+                    setTimeout(() => {
+                        const _ball = document.createElement('div');
+                        _ball.className = 'ball';
+                        _ball.textContent = bonus;
+                        _bonus.appendChild(_ball);
+                    }, 7000);
+                }
+            }
+
+
+  
+
+    </script>
+</body>
+
+</html>
