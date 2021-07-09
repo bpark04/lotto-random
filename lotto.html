@@ -18,13 +18,13 @@
             margin-right: 20px;
             margin-bottom: 20px;
         }
-
     </style>
 </head>
 
 <body>
-    <div id='result'>Result:  </div>
-    <div id='bonus'>Bonus:  </div>
+    <button id='start' style="margin-bottom: 20px;">START</button>
+    <div id='result'>Result: </div>
+    <div id='bonus'>Bonus: </div>
     <script>
         // code for random mix of 45 numbers
         const candidate = Array(45).fill().map((v, i) => i + 1);
@@ -40,29 +40,53 @@
         const bonus = shuffle[6];
         console.log(winBalls, bonus);
 
+        function giveColour(number, _ball) {
+            if (number < 10) {
+                _ball.style.backgroundColor = 'red';
+                _ball.style.color = 'white';
+            } else if (number < 20) {
+                _ball.style.backgroundColor = 'orange';
+            } else if (number < 30) {
+                _ball.style.backgroundColor = 'yellow';
+            } else if (number < 40) {
+                _ball.style.backgroundColor = 'blue';
+                _ball.style.color = 'white';
+            } else {
+                _ball.style.backgroundColor = 'green';
+                _ball.style.color = 'white';
+            }
+        }
+
+
+        const _start = document.querySelector('#start');
         const _result = document.querySelector('#result');
         const _bonus = document.querySelector('#bonus');
-        for (let i = 0; i <= 6; i++) {
-                if (i != 6) {
-                    setTimeout(() => {
-                        const _ball = document.createElement('div');
-                        _ball.className = 'ball';
-                        _ball.textContent = winBalls[i];
-                        _result.appendChild(_ball);
-                    }, (i+1) * 1000);
-                } else {
-                    setTimeout(() => {
-                        const _ball = document.createElement('div');
-                        _ball.className = 'ball';
-                        _ball.textContent = bonus;
-                        _bonus.appendChild(_ball);
-                    }, 7000);
-                }
+
+        function showBalls() {
+            for (let i = 0; i <= 6; i++) {
+            if (i != 6) {
+                setTimeout(() => {
+                    const _ball = document.createElement('div');
+                    _ball.className = 'ball';
+                    _ball.textContent = winBalls[i];
+                    giveColour(_ball.textContent, _ball);
+                    _result.appendChild(_ball);
+                }, (i + 1) * 1000);
+            } else {
+                setTimeout(() => {
+                    const _ball = document.createElement('div');
+                    _ball.className = 'ball';
+                    _ball.textContent = bonus;
+                    giveColour(_ball.textContent, _ball);
+                    _bonus.appendChild(_ball);
+                }, 7000);
             }
+        }
+        }
 
+        _start.addEventListener('click', showBalls);
 
-  
-
+        
     </script>
 </body>
 
